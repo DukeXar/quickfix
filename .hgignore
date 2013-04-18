@@ -19,6 +19,35 @@ Makefile
 Makefile.in
 quickfix.pc
 stamp-h1
+src/C++/Allocator.h
 
 # Temporary files used by the vim editor.
 .*.swp
+
+#
+*.o
+*.a
+*.la
+*.so
+*.dylib
+./lib/
+./include/
+src/.libs/
+src/C++/.libs/
+UnitTest++/**/*.d
+UnitTest++/TestUnitTest++
+
+src/at
+src/pt
+src/ut
+
+src/test/store/
+
+examples/executor/C++/.libs/executor
+examples/executor/C++/executor
+examples/ordermatch/.libs/ordermatch
+examples/ordermatch/ordermatch
+examples/ordermatch/test/.libs/ordermatch_ut
+examples/ordermatch/test/ordermatch_ut
+examples/tradeclient/.libs/tradeclient
+examples/tradeclient/tradeclient
