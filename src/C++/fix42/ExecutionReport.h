@@ -135,7 +135,12 @@ namespace FIX42
     class NoContraBrokers: public FIX::Group
     {
     public:
-    NoContraBrokers() : FIX::Group(382,375,FIX::message_order(375,337,437,438,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {375,337,437,438};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoContraBrokers () : FIX::Group(382,375,getOrder()) {}
       FIELD_SET(*this, FIX::ContraBroker);
       FIELD_SET(*this, FIX::ContraTrader);
       FIELD_SET(*this, FIX::ContraTradeQty);

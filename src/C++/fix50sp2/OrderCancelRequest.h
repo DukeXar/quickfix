@@ -40,7 +40,12 @@ namespace FIX50SP2
     class NoPartyIDs: public FIX::Group
     {
     public:
-    NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,802,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,802};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -48,7 +53,12 @@ namespace FIX50SP2
       class NoPartySubIDs: public FIX::Group
       {
       public:
-      NoPartySubIDs() : FIX::Group(802,523,FIX::message_order(523,803,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {523,803};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoPartySubIDs () : FIX::Group(802,523,getOrder()) {}
         FIELD_SET(*this, FIX::PartySubID);
         FIELD_SET(*this, FIX::PartySubIDType);
       };
@@ -147,7 +157,12 @@ namespace FIX50SP2
     class NoUnderlyings: public FIX::Group
     {
     public:
-    NoUnderlyings() : FIX::Group(711,311,FIX::message_order(311,312,309,305,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,972,975,973,974,998,1000,1038,1039,1044,1045,1046,1213,315,1419,1423,1424,1425,1437,1441,1453,1454,1455,1456,1459,1460,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {311,312,309,305,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,972,975,973,974,998,1000,1038,1039,1044,1045,1046,1213,315,1419,1423,1424,1425,1437,1441,1453,1454,1455,1456,1459,1460};
+        static FIX::message_order const order(data, 69);
+        return order;
+      };
+      NoUnderlyings () : FIX::Group(711,311,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSymbol);
       FIELD_SET(*this, FIX::UnderlyingSymbolSfx);
       FIELD_SET(*this, FIX::UnderlyingSecurityID);

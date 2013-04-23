@@ -32,7 +32,12 @@ namespace FIX44
     class NoCompIDs: public FIX::Group
     {
     public:
-    NoCompIDs() : FIX::Group(936,930,FIX::message_order(930,931,283,284,928,929,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {930,931,283,284,928,929};
+        static FIX::message_order const order(data, 6);
+        return order;
+      };
+      NoCompIDs () : FIX::Group(936,930,getOrder()) {}
       FIELD_SET(*this, FIX::RefCompID);
       FIELD_SET(*this, FIX::RefSubID);
       FIELD_SET(*this, FIX::LocationID);

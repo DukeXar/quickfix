@@ -47,7 +47,12 @@ namespace FIX43
     class NoPartyIDs: public FIX::Group
     {
     public:
-    NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,523,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,523};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -110,7 +115,12 @@ namespace FIX43
     class NoSecurityAltID: public FIX::Group
     {
     public:
-    NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {455,456};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityAltID);
       FIELD_SET(*this, FIX::SecurityAltIDSource);
     };
@@ -119,7 +129,12 @@ namespace FIX43
     class NoStipulations: public FIX::Group
     {
     public:
-    NoStipulations() : FIX::Group(232,233,FIX::message_order(233,234,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {233,234};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoStipulations () : FIX::Group(232,233,getOrder()) {}
       FIELD_SET(*this, FIX::StipulationType);
       FIELD_SET(*this, FIX::StipulationValue);
     };
@@ -219,7 +234,12 @@ namespace FIX43
     class NoContraBrokers: public FIX::Group
     {
     public:
-    NoContraBrokers() : FIX::Group(382,375,FIX::message_order(375,337,437,438,655,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {375,337,437,438,655};
+        static FIX::message_order const order(data, 5);
+        return order;
+      };
+      NoContraBrokers () : FIX::Group(382,375,getOrder()) {}
       FIELD_SET(*this, FIX::ContraBroker);
       FIELD_SET(*this, FIX::ContraTrader);
       FIELD_SET(*this, FIX::ContraTradeQty);
@@ -230,7 +250,12 @@ namespace FIX43
     class NoContAmts: public FIX::Group
     {
     public:
-    NoContAmts() : FIX::Group(518,519,FIX::message_order(519,520,521,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {519,520,521};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      NoContAmts () : FIX::Group(518,519,getOrder()) {}
       FIELD_SET(*this, FIX::ContAmtType);
       FIELD_SET(*this, FIX::ContAmtValue);
       FIELD_SET(*this, FIX::ContAmtCurr);
@@ -239,7 +264,12 @@ namespace FIX43
     class NoLegs: public FIX::Group
     {
     public:
-    NoLegs() : FIX::Group(555,600,FIX::message_order(600,601,602,603,604,607,608,609,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,613,614,615,616,617,618,619,620,621,622,623,624,564,565,539,654,566,587,588,637,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {600,601,602,603,604,607,608,609,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,613,614,615,616,617,618,619,620,621,622,623,624,564,565,539,654,566,587,588,637};
+        static FIX::message_order const order(data, 43);
+        return order;
+      };
+      NoLegs () : FIX::Group(555,600,getOrder()) {}
       FIELD_SET(*this, FIX::LegSymbol);
       FIELD_SET(*this, FIX::LegSymbolSfx);
       FIELD_SET(*this, FIX::LegSecurityID);
@@ -278,7 +308,12 @@ namespace FIX43
       class NoLegSecurityAltID: public FIX::Group
       {
       public:
-      NoLegSecurityAltID() : FIX::Group(604,605,FIX::message_order(605,606,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {605,606};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoLegSecurityAltID () : FIX::Group(604,605,getOrder()) {}
         FIELD_SET(*this, FIX::LegSecurityAltID);
         FIELD_SET(*this, FIX::LegSecurityAltIDSource);
       };
@@ -288,7 +323,12 @@ namespace FIX43
       class NoNestedPartyIDs: public FIX::Group
       {
       public:
-      NoNestedPartyIDs() : FIX::Group(539,524,FIX::message_order(524,525,538,545,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {524,525,538,545};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoNestedPartyIDs () : FIX::Group(539,524,getOrder()) {}
         FIELD_SET(*this, FIX::NestedPartyID);
         FIELD_SET(*this, FIX::NestedPartyIDSource);
         FIELD_SET(*this, FIX::NestedPartyRole);

@@ -47,21 +47,36 @@ namespace FIX50SP2
     class NoOrdTypeRules: public FIX::Group
     {
     public:
-    NoOrdTypeRules() : FIX::Group(1237,40,FIX::message_order(40,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {40};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoOrdTypeRules () : FIX::Group(1237,40,getOrder()) {}
       FIELD_SET(*this, FIX::OrdType);
     };
     FIELD_SET(*this, FIX::NoTimeInForceRules);
     class NoTimeInForceRules: public FIX::Group
     {
     public:
-    NoTimeInForceRules() : FIX::Group(1239,59,FIX::message_order(59,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {59};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoTimeInForceRules () : FIX::Group(1239,59,getOrder()) {}
       FIELD_SET(*this, FIX::TimeInForce);
     };
     FIELD_SET(*this, FIX::NoExecInstRules);
     class NoExecInstRules: public FIX::Group
     {
     public:
-    NoExecInstRules() : FIX::Group(1232,1308,FIX::message_order(1308,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {1308};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoExecInstRules () : FIX::Group(1232,1308,getOrder()) {}
       FIELD_SET(*this, FIX::ExecInstValue);
     };
     FIELD_SET(*this, FIX::TransactTime);

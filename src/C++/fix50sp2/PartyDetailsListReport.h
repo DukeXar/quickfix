@@ -35,7 +35,12 @@ namespace FIX50SP2
     class NoPartyList: public FIX::Group
     {
     public:
-    NoPartyList() : FIX::Group(1513,448,FIX::message_order(448,447,452,1562,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,1562};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyList () : FIX::Group(1513,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -43,7 +48,12 @@ namespace FIX50SP2
       class NoRelatedPartyIDs: public FIX::Group
       {
       public:
-      NoRelatedPartyIDs() : FIX::Group(1562,1563,FIX::message_order(1563,1564,1565,1514,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {1563,1564,1565,1514};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoRelatedPartyIDs () : FIX::Group(1562,1563,getOrder()) {}
         FIELD_SET(*this, FIX::RelatedPartyID);
         FIELD_SET(*this, FIX::RelatedPartyIDSource);
         FIELD_SET(*this, FIX::RelatedPartyRole);
@@ -51,7 +61,12 @@ namespace FIX50SP2
         class NoPartyRelationships: public FIX::Group
         {
         public:
-        NoPartyRelationships() : FIX::Group(1514,1515,FIX::message_order(1515,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {1515};
+            static FIX::message_order const order(data, 1);
+            return order;
+          };
+          NoPartyRelationships () : FIX::Group(1514,1515,getOrder()) {}
           FIELD_SET(*this, FIX::PartyRelationship);
         };
       };

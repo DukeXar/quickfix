@@ -35,7 +35,12 @@ namespace FIX50SP1
     class NoSecurityTypes: public FIX::Group
     {
     public:
-    NoSecurityTypes() : FIX::Group(558,167,FIX::message_order(167,762,460,461,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {167,762,460,461};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoSecurityTypes () : FIX::Group(558,167,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityType);
       FIELD_SET(*this, FIX::SecuritySubType);
       FIELD_SET(*this, FIX::Product);

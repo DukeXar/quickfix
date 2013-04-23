@@ -52,7 +52,12 @@ namespace FIX43
     class NoSecurityAltID: public FIX::Group
     {
     public:
-    NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {455,456};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityAltID);
       FIELD_SET(*this, FIX::SecurityAltIDSource);
     };
@@ -66,7 +71,12 @@ namespace FIX43
     class NoMDEntries: public FIX::Group
     {
     public:
-    NoMDEntries() : FIX::Group(268,269,FIX::message_order(269,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {269,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,58,354,355};
+        static FIX::message_order const order(data, 32);
+        return order;
+      };
+      NoMDEntries () : FIX::Group(268,269,getOrder()) {}
       FIELD_SET(*this, FIX::MDEntryType);
       FIELD_SET(*this, FIX::MDEntryPx);
       FIELD_SET(*this, FIX::Currency);

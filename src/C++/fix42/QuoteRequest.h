@@ -27,7 +27,12 @@ namespace FIX42
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,140,303,336,54,38,64,40,193,192,126,60,15,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,140,303,336,54,38,64,40,193,192,126,60,15};
+        static FIX::message_order const order(data, 31);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);

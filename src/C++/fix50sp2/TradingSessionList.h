@@ -20,7 +20,12 @@ namespace FIX50SP2
     class NoTradingSessions: public FIX::Group
     {
     public:
-    NoTradingSessions() : FIX::Group(386,336,FIX::message_order(336,625,207,338,339,325,340,567,341,342,343,344,345,387,58,354,355,1301,1300,1326,60,1327,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {336,625,207,338,339,325,340,567,341,342,343,344,345,387,58,354,355,1301,1300,1326,60,1327};
+        static FIX::message_order const order(data, 22);
+        return order;
+      };
+      NoTradingSessions () : FIX::Group(386,336,getOrder()) {}
       FIELD_SET(*this, FIX::TradingSessionID);
       FIELD_SET(*this, FIX::TradingSessionSubID);
       FIELD_SET(*this, FIX::SecurityExchange);

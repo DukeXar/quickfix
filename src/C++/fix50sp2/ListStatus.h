@@ -47,7 +47,12 @@ namespace FIX50SP2
     class NoOrders: public FIX::Group
     {
     public:
-    NoOrders() : FIX::Group(73,11,FIX::message_order(11,526,14,39,636,151,84,6,103,58,354,355,37,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {11,526,14,39,636,151,84,6,103,58,354,355,37};
+        static FIX::message_order const order(data, 13);
+        return order;
+      };
+      NoOrders () : FIX::Group(73,11,getOrder()) {}
       FIELD_SET(*this, FIX::ClOrdID);
       FIELD_SET(*this, FIX::SecondaryClOrdID);
       FIELD_SET(*this, FIX::CumQty);

@@ -28,7 +28,12 @@ namespace FIX50
     class NoAltMDSource: public FIX::Group
     {
     public:
-    NoAltMDSource() : FIX::Group(816,817,FIX::message_order(817,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {817};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoAltMDSource () : FIX::Group(816,817,getOrder()) {}
       FIELD_SET(*this, FIX::AltMDSourceID);
     };
     FIELD_SET(*this, FIX::Text);

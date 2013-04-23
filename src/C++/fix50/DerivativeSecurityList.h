@@ -90,7 +90,12 @@ namespace FIX50
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,15,827,668,869,555,336,625,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,15,827,668,869,555,336,625,58,354,355};
+        static FIX::message_order const order(data, 61);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
@@ -150,7 +155,12 @@ namespace FIX50
       class NoLegs: public FIX::Group
       {
       public:
-      NoLegs() : FIX::Group(555,600,FIX::message_order(600,601,602,603,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,999,1001,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {600,601,602,603,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,999,1001};
+          static FIX::message_order const order(data, 43);
+          return order;
+        };
+        NoLegs () : FIX::Group(555,600,getOrder()) {}
         FIELD_SET(*this, FIX::LegSymbol);
         FIELD_SET(*this, FIX::LegSymbolSfx);
         FIELD_SET(*this, FIX::LegSecurityID);

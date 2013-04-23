@@ -40,7 +40,12 @@ namespace FIX43
     class NoRoutingIDs: public FIX::Group
     {
     public:
-    NoRoutingIDs() : FIX::Group(215,216,FIX::message_order(216,217,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {216,217};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoRoutingIDs () : FIX::Group(215,216,getOrder()) {}
       FIELD_SET(*this, FIX::RoutingType);
       FIELD_SET(*this, FIX::RoutingID);
     };
@@ -48,7 +53,12 @@ namespace FIX43
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351};
+        static FIX::message_order const order(data, 33);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
@@ -85,7 +95,12 @@ namespace FIX43
       class NoSecurityAltID: public FIX::Group
       {
       public:
-      NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {455,456};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
         FIELD_SET(*this, FIX::SecurityAltID);
         FIELD_SET(*this, FIX::SecurityAltIDSource);
       };
@@ -94,7 +109,12 @@ namespace FIX43
     class LinesOfText: public FIX::Group
     {
     public:
-    LinesOfText() : FIX::Group(33,58,FIX::message_order(58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {58,354,355};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      LinesOfText () : FIX::Group(33,58,getOrder()) {}
       FIELD_SET(*this, FIX::Text);
       FIELD_SET(*this, FIX::EncodedTextLen);
       FIELD_SET(*this, FIX::EncodedText);

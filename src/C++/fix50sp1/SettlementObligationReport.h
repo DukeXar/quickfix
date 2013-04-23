@@ -36,7 +36,12 @@ namespace FIX50SP1
     class NoSettlOblig: public FIX::Group
     {
     public:
-    NoSettlOblig() : FIX::Group(1165,430,FIX::message_order(430,1161,1162,1163,1157,119,15,120,155,64,55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,1151,1146,1147,1227,1191,1192,1193,1194,1195,1196,1198,1199,1200,201,1244,1242,1197,453,168,126,779,1158,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {430,1161,1162,1163,1157,119,15,120,155,64,55,65,48,22,460,461,167,762,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,947,206,231,223,207,106,348,349,107,350,351,691,667,875,876,873,874,965,966,1049,967,968,969,970,971,996,997,1079,1151,1146,1147,1227,1191,1192,1193,1194,1195,1196,1198,1199,1200,201,1244,1242,1197,453,168,126,779,1158};
+        static FIX::message_order const order(data, 83);
+        return order;
+      };
+      NoSettlOblig () : FIX::Group(1165,430,getOrder()) {}
       FIELD_SET(*this, FIX::NetGrossInd);
       FIELD_SET(*this, FIX::SettlObligID);
       FIELD_SET(*this, FIX::SettlObligTransType);
@@ -119,7 +124,12 @@ namespace FIX50SP1
       class NoPartyIDs: public FIX::Group
       {
       public:
-      NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,802,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {448,447,452,802};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
         FIELD_SET(*this, FIX::PartyID);
         FIELD_SET(*this, FIX::PartyIDSource);
         FIELD_SET(*this, FIX::PartyRole);
@@ -127,7 +137,12 @@ namespace FIX50SP1
         class NoPartySubIDs: public FIX::Group
         {
         public:
-        NoPartySubIDs() : FIX::Group(802,523,FIX::message_order(523,803,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {523,803};
+            static FIX::message_order const order(data, 2);
+            return order;
+          };
+          NoPartySubIDs () : FIX::Group(802,523,getOrder()) {}
           FIELD_SET(*this, FIX::PartySubID);
           FIELD_SET(*this, FIX::PartySubIDType);
         };
@@ -139,13 +154,23 @@ namespace FIX50SP1
       class NoSettlDetails: public FIX::Group
       {
       public:
-      NoSettlDetails() : FIX::Group(1158,1164,FIX::message_order(1164,781,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {1164,781};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoSettlDetails () : FIX::Group(1158,1164,getOrder()) {}
         FIELD_SET(*this, FIX::SettlObligSource);
         FIELD_SET(*this, FIX::NoSettlPartyIDs);
         class NoSettlPartyIDs: public FIX::Group
         {
         public:
-        NoSettlPartyIDs() : FIX::Group(781,782,FIX::message_order(782,783,784,801,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {782,783,784,801};
+            static FIX::message_order const order(data, 4);
+            return order;
+          };
+          NoSettlPartyIDs () : FIX::Group(781,782,getOrder()) {}
           FIELD_SET(*this, FIX::SettlPartyID);
           FIELD_SET(*this, FIX::SettlPartyIDSource);
           FIELD_SET(*this, FIX::SettlPartyRole);
@@ -153,7 +178,12 @@ namespace FIX50SP1
           class NoSettlPartySubIDs: public FIX::Group
           {
           public:
-          NoSettlPartySubIDs() : FIX::Group(801,785,FIX::message_order(785,786,0)) {}
+            static FIX::message_order const & getOrder() {
+              static int const data[] = {785,786};
+              static FIX::message_order const order(data, 2);
+              return order;
+            };
+            NoSettlPartySubIDs () : FIX::Group(801,785,getOrder()) {}
             FIELD_SET(*this, FIX::SettlPartySubID);
             FIELD_SET(*this, FIX::SettlPartySubIDType);
           };

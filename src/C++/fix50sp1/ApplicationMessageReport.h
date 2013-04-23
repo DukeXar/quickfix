@@ -30,7 +30,12 @@ namespace FIX50SP1
     class NoApplIDs: public FIX::Group
     {
     public:
-    NoApplIDs() : FIX::Group(1351,1355,FIX::message_order(1355,1399,1357,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {1355,1399,1357};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      NoApplIDs () : FIX::Group(1351,1355,getOrder()) {}
       FIELD_SET(*this, FIX::RefApplID);
       FIELD_SET(*this, FIX::ApplNewSeqNum);
       FIELD_SET(*this, FIX::RefApplLastSeqNum);

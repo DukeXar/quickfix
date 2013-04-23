@@ -90,7 +90,12 @@ namespace FIX40
     class NoMiscFees: public FIX::Group
     {
     public:
-    NoMiscFees() : FIX::Group(136,137,FIX::message_order(137,138,139,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {137,138,139};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      NoMiscFees () : FIX::Group(136,137,getOrder()) {}
       FIELD_SET(*this, FIX::MiscFeeAmt);
       FIELD_SET(*this, FIX::MiscFeeCurr);
       FIELD_SET(*this, FIX::MiscFeeType);

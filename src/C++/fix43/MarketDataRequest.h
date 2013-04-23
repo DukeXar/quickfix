@@ -38,14 +38,24 @@ namespace FIX43
     class NoMDEntryTypes: public FIX::Group
     {
     public:
-    NoMDEntryTypes() : FIX::Group(267,269,FIX::message_order(269,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {269};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoMDEntryTypes () : FIX::Group(267,269,getOrder()) {}
       FIELD_SET(*this, FIX::MDEntryType);
     };
     FIELD_SET(*this, FIX::NoRelatedSym);
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351};
+        static FIX::message_order const order(data, 33);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
@@ -82,7 +92,12 @@ namespace FIX43
       class NoSecurityAltID: public FIX::Group
       {
       public:
-      NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {455,456};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
         FIELD_SET(*this, FIX::SecurityAltID);
         FIELD_SET(*this, FIX::SecurityAltIDSource);
       };
@@ -91,7 +106,12 @@ namespace FIX43
     class NoTradingSessions: public FIX::Group
     {
     public:
-    NoTradingSessions() : FIX::Group(386,336,FIX::message_order(336,625,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {336,625};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoTradingSessions () : FIX::Group(386,336,getOrder()) {}
       FIELD_SET(*this, FIX::TradingSessionID);
       FIELD_SET(*this, FIX::TradingSessionSubID);
     };

@@ -38,7 +38,12 @@ namespace FIX41
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,46,FIX::message_order(46,65,48,22,167,200,205,201,202,206,207,106,107,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {46,65,48,22,167,200,205,201,202,206,207,106,107};
+        static FIX::message_order const order(data, 13);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,46,getOrder()) {}
       FIELD_SET(*this, FIX::RelatdSym);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
@@ -57,7 +62,12 @@ namespace FIX41
     class LinesOfText: public FIX::Group
     {
     public:
-    LinesOfText() : FIX::Group(33,58,FIX::message_order(58,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {58};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      LinesOfText () : FIX::Group(33,58,getOrder()) {}
       FIELD_SET(*this, FIX::Text);
     };
   };

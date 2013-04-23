@@ -34,7 +34,12 @@ namespace FIX43
     class NoPartyIDs: public FIX::Group
     {
     public:
-    NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,523,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,523};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -48,7 +53,12 @@ namespace FIX43
     class NoRegistDtls: public FIX::Group
     {
     public:
-    NoRegistDtls() : FIX::Group(473,509,FIX::message_order(509,511,474,482,539,522,486,475,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {509,511,474,482,539,522,486,475};
+        static FIX::message_order const order(data, 8);
+        return order;
+      };
+      NoRegistDtls () : FIX::Group(473,509,getOrder()) {}
       FIELD_SET(*this, FIX::RegistDetls);
       FIELD_SET(*this, FIX::RegistEmail);
       FIELD_SET(*this, FIX::MailingDtls);
@@ -57,7 +67,12 @@ namespace FIX43
       class NoNestedPartyIDs: public FIX::Group
       {
       public:
-      NoNestedPartyIDs() : FIX::Group(539,524,FIX::message_order(524,525,538,545,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {524,525,538,545};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoNestedPartyIDs () : FIX::Group(539,524,getOrder()) {}
         FIELD_SET(*this, FIX::NestedPartyID);
         FIELD_SET(*this, FIX::NestedPartyIDSource);
         FIELD_SET(*this, FIX::NestedPartyRole);
@@ -71,7 +86,12 @@ namespace FIX43
     class NoDistribInsts: public FIX::Group
     {
     public:
-    NoDistribInsts() : FIX::Group(510,477,FIX::message_order(477,512,478,498,499,500,501,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {477,512,478,498,499,500,501};
+        static FIX::message_order const order(data, 7);
+        return order;
+      };
+      NoDistribInsts () : FIX::Group(510,477,getOrder()) {}
       FIELD_SET(*this, FIX::DistribPaymentMethod);
       FIELD_SET(*this, FIX::DistribPercentage);
       FIELD_SET(*this, FIX::CashDistribCurr);

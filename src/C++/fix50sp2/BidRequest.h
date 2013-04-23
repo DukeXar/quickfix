@@ -46,7 +46,12 @@ namespace FIX50SP2
     class NoBidDescriptors: public FIX::Group
     {
     public:
-    NoBidDescriptors() : FIX::Group(398,399,FIX::message_order(399,400,401,404,441,402,403,405,406,407,408,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {399,400,401,404,441,402,403,405,406,407,408};
+        static FIX::message_order const order(data, 11);
+        return order;
+      };
+      NoBidDescriptors () : FIX::Group(398,399,getOrder()) {}
       FIELD_SET(*this, FIX::BidDescriptorType);
       FIELD_SET(*this, FIX::BidDescriptor);
       FIELD_SET(*this, FIX::SideValueInd);
@@ -63,7 +68,12 @@ namespace FIX50SP2
     class NoBidComponents: public FIX::Group
     {
     public:
-    NoBidComponents() : FIX::Group(420,66,FIX::message_order(66,54,336,625,430,63,64,1,660,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {66,54,336,625,430,63,64,1,660};
+        static FIX::message_order const order(data, 9);
+        return order;
+      };
+      NoBidComponents () : FIX::Group(420,66,getOrder()) {}
       FIELD_SET(*this, FIX::ListID);
       FIELD_SET(*this, FIX::Side);
       FIELD_SET(*this, FIX::TradingSessionID);

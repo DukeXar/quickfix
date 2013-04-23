@@ -20,7 +20,12 @@ namespace FIX42
     class NoMDEntries: public FIX::Group
     {
     public:
-    NoMDEntries() : FIX::Group(268,279,FIX::message_order(279,285,269,278,280,55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,291,292,270,15,271,272,273,274,275,336,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,387,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {279,285,269,278,280,55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,291,292,270,15,271,272,273,274,275,336,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,387,58,354,355};
+        static FIX::message_order const order(data, 56);
+        return order;
+      };
+      NoMDEntries () : FIX::Group(268,279,getOrder()) {}
       FIELD_SET(*this, FIX::MDUpdateAction);
       FIELD_SET(*this, FIX::DeleteReason);
       FIELD_SET(*this, FIX::MDEntryType);

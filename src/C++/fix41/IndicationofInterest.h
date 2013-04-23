@@ -61,7 +61,12 @@ namespace FIX41
     class NoIOIQualifiers: public FIX::Group
     {
     public:
-    NoIOIQualifiers() : FIX::Group(199,104,FIX::message_order(104,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {104};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoIOIQualifiers () : FIX::Group(199,104,getOrder()) {}
       FIELD_SET(*this, FIX::IOIQualifier);
     };
   };

@@ -39,7 +39,12 @@ namespace FIX44
     class NoHops: public FIX::Group
     {
     public:
-    NoHops() : FIX::Group(627,628,FIX::message_order(628,629,630,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {628,629,630};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      NoHops () : FIX::Group(627,628,getOrder()) {}
       FIELD_SET(*this, FIX::HopCompID);
       FIELD_SET(*this, FIX::HopSendingTime);
       FIELD_SET(*this, FIX::HopRefID);

@@ -39,7 +39,12 @@ namespace FIX50SP1
     class NoSettlInst: public FIX::Group
     {
     public:
-    NoSettlInst() : FIX::Group(778,162,FIX::message_order(162,163,214,453,54,460,167,461,168,126,779,172,169,170,171,492,476,488,489,503,490,491,504,505,120,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {162,163,214,453,54,460,167,461,168,126,779,172,169,170,171,492,476,488,489,503,490,491,504,505,120};
+        static FIX::message_order const order(data, 25);
+        return order;
+      };
+      NoSettlInst () : FIX::Group(778,162,getOrder()) {}
       FIELD_SET(*this, FIX::SettlInstID);
       FIELD_SET(*this, FIX::SettlInstTransType);
       FIELD_SET(*this, FIX::SettlInstRefID);
@@ -47,7 +52,12 @@ namespace FIX50SP1
       class NoPartyIDs: public FIX::Group
       {
       public:
-      NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,802,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {448,447,452,802};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
         FIELD_SET(*this, FIX::PartyID);
         FIELD_SET(*this, FIX::PartyIDSource);
         FIELD_SET(*this, FIX::PartyRole);
@@ -55,7 +65,12 @@ namespace FIX50SP1
         class NoPartySubIDs: public FIX::Group
         {
         public:
-        NoPartySubIDs() : FIX::Group(802,523,FIX::message_order(523,803,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {523,803};
+            static FIX::message_order const order(data, 2);
+            return order;
+          };
+          NoPartySubIDs () : FIX::Group(802,523,getOrder()) {}
           FIELD_SET(*this, FIX::PartySubID);
           FIELD_SET(*this, FIX::PartySubIDType);
         };

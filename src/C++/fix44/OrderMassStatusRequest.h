@@ -30,7 +30,12 @@ namespace FIX44
     class NoPartyIDs: public FIX::Group
     {
     public:
-    NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,802,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,802};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -38,7 +43,12 @@ namespace FIX44
       class NoPartySubIDs: public FIX::Group
       {
       public:
-      NoPartySubIDs() : FIX::Group(802,523,FIX::message_order(523,803,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {523,803};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoPartySubIDs () : FIX::Group(802,523,getOrder()) {}
         FIELD_SET(*this, FIX::PartySubID);
         FIELD_SET(*this, FIX::PartySubIDType);
       };
@@ -91,7 +101,12 @@ namespace FIX44
     class NoSecurityAltID: public FIX::Group
     {
     public:
-    NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {455,456};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityAltID);
       FIELD_SET(*this, FIX::SecurityAltIDSource);
     };
@@ -99,7 +114,12 @@ namespace FIX44
     class NoEvents: public FIX::Group
     {
     public:
-    NoEvents() : FIX::Group(864,865,FIX::message_order(865,866,867,868,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {865,866,867,868};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoEvents () : FIX::Group(864,865,getOrder()) {}
       FIELD_SET(*this, FIX::EventType);
       FIELD_SET(*this, FIX::EventDate);
       FIELD_SET(*this, FIX::EventPx);
@@ -153,7 +173,12 @@ namespace FIX44
     class NoUnderlyingSecurityAltID: public FIX::Group
     {
     public:
-    NoUnderlyingSecurityAltID() : FIX::Group(457,458,FIX::message_order(458,459,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {458,459};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoUnderlyingSecurityAltID () : FIX::Group(457,458,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSecurityAltID);
       FIELD_SET(*this, FIX::UnderlyingSecurityAltIDSource);
     };

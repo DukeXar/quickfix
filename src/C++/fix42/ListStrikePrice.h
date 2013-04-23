@@ -30,7 +30,12 @@ namespace FIX42
     class NoStrikes: public FIX::Group
     {
     public:
-    NoStrikes() : FIX::Group(428,55,FIX::message_order(55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,140,11,54,44,15,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,140,11,54,44,15,58,354,355};
+        static FIX::message_order const order(data, 27);
+        return order;
+      };
+      NoStrikes () : FIX::Group(428,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);

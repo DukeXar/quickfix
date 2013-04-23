@@ -21,7 +21,12 @@ namespace FIX42
     class NoBidComponents: public FIX::Group
     {
     public:
-    NoBidComponents() : FIX::Group(420,12,FIX::message_order(12,13,66,421,54,44,423,406,430,63,64,336,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {12,13,66,421,54,44,423,406,430,63,64,336,58,354,355};
+        static FIX::message_order const order(data, 15);
+        return order;
+      };
+      NoBidComponents () : FIX::Group(420,12,getOrder()) {}
       FIELD_SET(*this, FIX::Commission);
       FIELD_SET(*this, FIX::CommType);
       FIELD_SET(*this, FIX::ListID);

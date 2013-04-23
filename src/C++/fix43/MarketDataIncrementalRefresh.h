@@ -20,7 +20,12 @@ namespace FIX43
     class NoMDEntries: public FIX::Group
     {
     public:
-    NoMDEntries() : FIX::Group(268,279,FIX::message_order(279,285,269,278,280,55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,291,292,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,387,449,450,451,58,354,355,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {279,285,269,278,280,55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,291,292,270,15,271,272,273,274,275,336,625,276,277,282,283,284,286,59,432,126,110,18,287,37,299,288,289,346,290,546,387,449,450,451,58,354,355};
+        static FIX::message_order const order(data, 75);
+        return order;
+      };
+      NoMDEntries () : FIX::Group(268,279,getOrder()) {}
       FIELD_SET(*this, FIX::MDUpdateAction);
       FIELD_SET(*this, FIX::DeleteReason);
       FIELD_SET(*this, FIX::MDEntryType);
@@ -62,7 +67,12 @@ namespace FIX43
       class NoSecurityAltID: public FIX::Group
       {
       public:
-      NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {455,456};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
         FIELD_SET(*this, FIX::SecurityAltID);
         FIELD_SET(*this, FIX::SecurityAltIDSource);
       };

@@ -33,7 +33,12 @@ namespace FIX42
     class NoQuoteSets: public FIX::Group
     {
     public:
-    NoQuoteSets() : FIX::Group(296,302,FIX::message_order(302,311,312,309,305,310,313,314,315,316,317,436,435,308,306,362,363,307,364,365,304,295,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {302,311,312,309,305,310,313,314,315,316,317,436,435,308,306,362,363,307,364,365,304,295};
+        static FIX::message_order const order(data, 22);
+        return order;
+      };
+      NoQuoteSets () : FIX::Group(296,302,getOrder()) {}
       FIELD_SET(*this, FIX::QuoteSetID);
       FIELD_SET(*this, FIX::UnderlyingSymbol);
       FIELD_SET(*this, FIX::UnderlyingSymbolSfx);
@@ -59,7 +64,12 @@ namespace FIX42
       class NoQuoteEntries: public FIX::Group
       {
       public:
-      NoQuoteEntries() : FIX::Group(295,299,FIX::message_order(299,55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,368,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {299,55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,368};
+          static FIX::message_order const order(data, 21);
+          return order;
+        };
+        NoQuoteEntries () : FIX::Group(295,299,getOrder()) {}
         FIELD_SET(*this, FIX::QuoteEntryID);
         FIELD_SET(*this, FIX::Symbol);
         FIELD_SET(*this, FIX::SymbolSfx);

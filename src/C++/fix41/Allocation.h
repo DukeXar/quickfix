@@ -71,7 +71,12 @@ namespace FIX41
     class NoOrders: public FIX::Group
     {
     public:
-    NoOrders() : FIX::Group(73,11,FIX::message_order(11,37,198,66,105,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {11,37,198,66,105};
+        static FIX::message_order const order(data, 5);
+        return order;
+      };
+      NoOrders () : FIX::Group(73,11,getOrder()) {}
       FIELD_SET(*this, FIX::ClOrdID);
       FIELD_SET(*this, FIX::OrderID);
       FIELD_SET(*this, FIX::SecondaryOrderID);
@@ -82,7 +87,12 @@ namespace FIX41
     class NoExecs: public FIX::Group
     {
     public:
-    NoExecs() : FIX::Group(124,32,FIX::message_order(32,17,31,29,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {32,17,31,29};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoExecs () : FIX::Group(124,32,getOrder()) {}
       FIELD_SET(*this, FIX::LastShares);
       FIELD_SET(*this, FIX::ExecID);
       FIELD_SET(*this, FIX::LastPx);
@@ -92,7 +102,12 @@ namespace FIX41
     class NoAllocs: public FIX::Group
     {
     public:
-    NoAllocs() : FIX::Group(78,79,FIX::message_order(79,80,81,92,208,209,161,76,109,12,13,153,154,119,120,155,156,159,160,136,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {79,80,81,92,208,209,161,76,109,12,13,153,154,119,120,155,156,159,160,136};
+        static FIX::message_order const order(data, 20);
+        return order;
+      };
+      NoAllocs () : FIX::Group(78,79,getOrder()) {}
       FIELD_SET(*this, FIX::AllocAccount);
       FIELD_SET(*this, FIX::AllocShares);
       FIELD_SET(*this, FIX::ProcessCode);
@@ -116,7 +131,12 @@ namespace FIX41
       class NoMiscFees: public FIX::Group
       {
       public:
-      NoMiscFees() : FIX::Group(136,137,FIX::message_order(137,138,139,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {137,138,139};
+          static FIX::message_order const order(data, 3);
+          return order;
+        };
+        NoMiscFees () : FIX::Group(136,137,getOrder()) {}
         FIELD_SET(*this, FIX::MiscFeeAmt);
         FIELD_SET(*this, FIX::MiscFeeCurr);
         FIELD_SET(*this, FIX::MiscFeeType);

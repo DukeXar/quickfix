@@ -105,7 +105,12 @@ namespace FIX50SP2
     class NoUnderlyings: public FIX::Group
     {
     public:
-    NoUnderlyings() : FIX::Group(711,311,FIX::message_order(311,312,309,305,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,972,975,973,974,998,1000,1038,1039,1044,1045,1046,1213,315,1419,1423,1424,1425,1437,1441,1453,1454,1455,1456,1459,1460,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {311,312,309,305,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,972,975,973,974,998,1000,1038,1039,1044,1045,1046,1213,315,1419,1423,1424,1425,1437,1441,1453,1454,1455,1456,1459,1460};
+        static FIX::message_order const order(data, 69);
+        return order;
+      };
+      NoUnderlyings () : FIX::Group(711,311,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSymbol);
       FIELD_SET(*this, FIX::UnderlyingSymbolSfx);
       FIELD_SET(*this, FIX::UnderlyingSecurityID);
@@ -184,7 +189,12 @@ namespace FIX50SP2
     class NoLegs: public FIX::Group
     {
     public:
-    NoLegs() : FIX::Group(555,600,FIX::message_order(600,601,602,603,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,999,1001,1017,566,1212,1358,1420,1224,1421,1422,1436,1440,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {600,601,602,603,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,999,1001,1017,566,1212,1358,1420,1224,1421,1422,1436,1440};
+        static FIX::message_order const order(data, 53);
+        return order;
+      };
+      NoLegs () : FIX::Group(555,600,getOrder()) {}
       FIELD_SET(*this, FIX::LegSymbol);
       FIELD_SET(*this, FIX::LegSymbolSfx);
       FIELD_SET(*this, FIX::LegSecurityID);
@@ -245,7 +255,12 @@ namespace FIX50SP2
     class NoStipulations: public FIX::Group
     {
     public:
-    NoStipulations() : FIX::Group(232,233,FIX::message_order(233,234,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {233,234};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoStipulations () : FIX::Group(232,233,getOrder()) {}
       FIELD_SET(*this, FIX::StipulationType);
       FIELD_SET(*this, FIX::StipulationValue);
     };
@@ -268,14 +283,24 @@ namespace FIX50SP2
     class NoMarketSegments: public FIX::Group
     {
     public:
-    NoMarketSegments() : FIX::Group(1310,1301,FIX::message_order(1301,1300,1201,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {1301,1300,1201};
+        static FIX::message_order const order(data, 3);
+        return order;
+      };
+      NoMarketSegments () : FIX::Group(1310,1301,getOrder()) {}
       FIELD_SET(*this, FIX::MarketID);
       FIELD_SET(*this, FIX::MarketSegmentID);
       FIELD_SET(*this, FIX::NoStrikeRules);
       class NoStrikeRules: public FIX::Group
       {
       public:
-      NoStrikeRules() : FIX::Group(1201,1223,FIX::message_order(1223,1202,1203,1204,1304,1236,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {1223,1202,1203,1204,1304,1236};
+          static FIX::message_order const order(data, 6);
+          return order;
+        };
+        NoStrikeRules () : FIX::Group(1201,1223,getOrder()) {}
         FIELD_SET(*this, FIX::StrikeRuleID);
         FIELD_SET(*this, FIX::StartStrikePxRange);
         FIELD_SET(*this, FIX::EndStrikePxRange);
@@ -285,7 +310,12 @@ namespace FIX50SP2
         class NoMaturityRules: public FIX::Group
         {
         public:
-        NoMaturityRules() : FIX::Group(1236,1222,FIX::message_order(1222,1303,1302,1241,1226,1229,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {1222,1303,1302,1241,1226,1229};
+            static FIX::message_order const order(data, 6);
+            return order;
+          };
+          NoMaturityRules () : FIX::Group(1236,1222,getOrder()) {}
           FIELD_SET(*this, FIX::MaturityRuleID);
           FIELD_SET(*this, FIX::MaturityMonthYearFormat);
           FIELD_SET(*this, FIX::MaturityMonthYearIncrementUnits);

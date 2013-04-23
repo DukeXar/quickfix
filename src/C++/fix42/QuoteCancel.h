@@ -33,7 +33,12 @@ namespace FIX42
     class NoQuoteEntries: public FIX::Group
     {
     public:
-    NoQuoteEntries() : FIX::Group(295,55,FIX::message_order(55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,311,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,311};
+        static FIX::message_order const order(data, 20);
+        return order;
+      };
+      NoQuoteEntries () : FIX::Group(295,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);

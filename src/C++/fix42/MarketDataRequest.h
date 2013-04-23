@@ -35,14 +35,24 @@ namespace FIX42
     class NoMDEntryTypes: public FIX::Group
     {
     public:
-    NoMDEntryTypes() : FIX::Group(267,269,FIX::message_order(269,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {269};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoMDEntryTypes () : FIX::Group(267,269,getOrder()) {}
       FIELD_SET(*this, FIX::MDEntryType);
     };
     FIELD_SET(*this, FIX::NoRelatedSym);
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,336,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,167,200,205,201,202,206,231,223,207,106,348,349,107,350,351,336};
+        static FIX::message_order const order(data, 20);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);

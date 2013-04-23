@@ -34,7 +34,12 @@ namespace FIX43
     class NoRelatedSym: public FIX::Group
     {
     public:
-    NoRelatedSym() : FIX::Group(146,55,FIX::message_order(55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,140,303,537,336,625,229,232,54,465,38,152,63,64,40,193,192,126,60,15,218,220,221,222,423,44,640,235,236,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {55,65,48,22,454,460,461,167,200,541,224,225,239,226,227,228,255,543,470,471,472,240,202,206,231,223,207,106,348,349,107,350,351,140,303,537,336,625,229,232,54,465,38,152,63,64,40,193,192,126,60,15,218,220,221,222,423,44,640,235,236};
+        static FIX::message_order const order(data, 61);
+        return order;
+      };
+      NoRelatedSym () : FIX::Group(146,55,getOrder()) {}
       FIELD_SET(*this, FIX::Symbol);
       FIELD_SET(*this, FIX::SymbolSfx);
       FIELD_SET(*this, FIX::SecurityID);
@@ -71,7 +76,12 @@ namespace FIX43
       class NoSecurityAltID: public FIX::Group
       {
       public:
-      NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {455,456};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
         FIELD_SET(*this, FIX::SecurityAltID);
         FIELD_SET(*this, FIX::SecurityAltIDSource);
       };
@@ -85,7 +95,12 @@ namespace FIX43
       class NoStipulations: public FIX::Group
       {
       public:
-      NoStipulations() : FIX::Group(232,233,FIX::message_order(233,234,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {233,234};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoStipulations () : FIX::Group(232,233,getOrder()) {}
         FIELD_SET(*this, FIX::StipulationType);
         FIELD_SET(*this, FIX::StipulationValue);
       };

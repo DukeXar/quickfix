@@ -75,7 +75,12 @@ namespace FIX44
     class NoSecurityAltID: public FIX::Group
     {
     public:
-    NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {455,456};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityAltID);
       FIELD_SET(*this, FIX::SecurityAltIDSource);
     };
@@ -83,7 +88,12 @@ namespace FIX44
     class NoEvents: public FIX::Group
     {
     public:
-    NoEvents() : FIX::Group(864,865,FIX::message_order(865,866,867,868,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {865,866,867,868};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoEvents () : FIX::Group(864,865,getOrder()) {}
       FIELD_SET(*this, FIX::EventType);
       FIELD_SET(*this, FIX::EventDate);
       FIELD_SET(*this, FIX::EventPx);
@@ -111,7 +121,12 @@ namespace FIX44
     class NoStipulations: public FIX::Group
     {
     public:
-    NoStipulations() : FIX::Group(232,233,FIX::message_order(233,234,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {233,234};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoStipulations () : FIX::Group(232,233,getOrder()) {}
       FIELD_SET(*this, FIX::StipulationType);
       FIELD_SET(*this, FIX::StipulationValue);
     };
@@ -143,7 +158,12 @@ namespace FIX44
     class NoUnderlyings: public FIX::Group
     {
     public:
-    NoUnderlyings() : FIX::Group(711,311,FIX::message_order(311,312,309,305,457,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {311,312,309,305,457,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886};
+        static FIX::message_order const order(data, 45);
+        return order;
+      };
+      NoUnderlyings () : FIX::Group(711,311,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSymbol);
       FIELD_SET(*this, FIX::UnderlyingSymbolSfx);
       FIELD_SET(*this, FIX::UnderlyingSecurityID);
@@ -192,7 +212,12 @@ namespace FIX44
       class NoUnderlyingSecurityAltID: public FIX::Group
       {
       public:
-      NoUnderlyingSecurityAltID() : FIX::Group(457,458,FIX::message_order(458,459,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {458,459};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoUnderlyingSecurityAltID () : FIX::Group(457,458,getOrder()) {}
         FIELD_SET(*this, FIX::UnderlyingSecurityAltID);
         FIELD_SET(*this, FIX::UnderlyingSecurityAltIDSource);
       };
@@ -201,7 +226,12 @@ namespace FIX44
     class NoLegs: public FIX::Group
     {
     public:
-    NoLegs() : FIX::Group(555,600,FIX::message_order(600,601,602,603,604,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,682,683,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {600,601,602,603,604,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,682,683};
+        static FIX::message_order const order(data, 44);
+        return order;
+      };
+      NoLegs () : FIX::Group(555,600,getOrder()) {}
       FIELD_SET(*this, FIX::LegSymbol);
       FIELD_SET(*this, FIX::LegSymbolSfx);
       FIELD_SET(*this, FIX::LegSecurityID);
@@ -247,7 +277,12 @@ namespace FIX44
       class NoLegSecurityAltID: public FIX::Group
       {
       public:
-      NoLegSecurityAltID() : FIX::Group(604,605,FIX::message_order(605,606,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {605,606};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoLegSecurityAltID () : FIX::Group(604,605,getOrder()) {}
         FIELD_SET(*this, FIX::LegSecurityAltID);
         FIELD_SET(*this, FIX::LegSecurityAltIDSource);
       };
@@ -256,7 +291,12 @@ namespace FIX44
       class NoLegStipulations: public FIX::Group
       {
       public:
-      NoLegStipulations() : FIX::Group(683,688,FIX::message_order(688,689,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {688,689};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoLegStipulations () : FIX::Group(683,688,getOrder()) {}
         FIELD_SET(*this, FIX::LegStipulationType);
         FIELD_SET(*this, FIX::LegStipulationValue);
       };
@@ -265,14 +305,24 @@ namespace FIX44
     class NoIOIQualifiers: public FIX::Group
     {
     public:
-    NoIOIQualifiers() : FIX::Group(199,104,FIX::message_order(104,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {104};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoIOIQualifiers () : FIX::Group(199,104,getOrder()) {}
       FIELD_SET(*this, FIX::IOIQualifier);
     };
     FIELD_SET(*this, FIX::NoRoutingIDs);
     class NoRoutingIDs: public FIX::Group
     {
     public:
-    NoRoutingIDs() : FIX::Group(215,216,FIX::message_order(216,217,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {216,217};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoRoutingIDs () : FIX::Group(215,216,getOrder()) {}
       FIELD_SET(*this, FIX::RoutingType);
       FIELD_SET(*this, FIX::RoutingID);
     };

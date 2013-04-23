@@ -74,7 +74,12 @@ namespace FIX44
     class NoUnderlyingSecurityAltID: public FIX::Group
     {
     public:
-    NoUnderlyingSecurityAltID() : FIX::Group(457,458,FIX::message_order(458,459,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {458,459};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoUnderlyingSecurityAltID () : FIX::Group(457,458,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSecurityAltID);
       FIELD_SET(*this, FIX::UnderlyingSecurityAltIDSource);
     };

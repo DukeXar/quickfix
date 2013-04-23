@@ -32,7 +32,12 @@ namespace FIX50SP2
     class NoOrders: public FIX::Group
     {
     public:
-    NoOrders() : FIX::Group(73,11,FIX::message_order(11,37,198,526,66,756,38,799,800,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {11,37,198,526,66,756,38,799,800};
+        static FIX::message_order const order(data, 9);
+        return order;
+      };
+      NoOrders () : FIX::Group(73,11,getOrder()) {}
       FIELD_SET(*this, FIX::ClOrdID);
       FIELD_SET(*this, FIX::OrderID);
       FIELD_SET(*this, FIX::SecondaryOrderID);
@@ -42,7 +47,12 @@ namespace FIX50SP2
       class NoNested2PartyIDs: public FIX::Group
       {
       public:
-      NoNested2PartyIDs() : FIX::Group(756,757,FIX::message_order(757,758,759,806,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {757,758,759,806};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoNested2PartyIDs () : FIX::Group(756,757,getOrder()) {}
         FIELD_SET(*this, FIX::Nested2PartyID);
         FIELD_SET(*this, FIX::Nested2PartyIDSource);
         FIELD_SET(*this, FIX::Nested2PartyRole);
@@ -50,7 +60,12 @@ namespace FIX50SP2
         class NoNested2PartySubIDs: public FIX::Group
         {
         public:
-        NoNested2PartySubIDs() : FIX::Group(806,760,FIX::message_order(760,807,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {760,807};
+            static FIX::message_order const order(data, 2);
+            return order;
+          };
+          NoNested2PartySubIDs () : FIX::Group(806,760,getOrder()) {}
           FIELD_SET(*this, FIX::Nested2PartySubID);
           FIELD_SET(*this, FIX::Nested2PartySubIDType);
         };

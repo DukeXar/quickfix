@@ -101,7 +101,12 @@ namespace FIX44
     class NoSecurityAltID: public FIX::Group
     {
     public:
-    NoSecurityAltID() : FIX::Group(454,455,FIX::message_order(455,456,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {455,456};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoSecurityAltID () : FIX::Group(454,455,getOrder()) {}
       FIELD_SET(*this, FIX::SecurityAltID);
       FIELD_SET(*this, FIX::SecurityAltIDSource);
     };
@@ -109,7 +114,12 @@ namespace FIX44
     class NoEvents: public FIX::Group
     {
     public:
-    NoEvents() : FIX::Group(864,865,FIX::message_order(865,866,867,868,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {865,866,867,868};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoEvents () : FIX::Group(864,865,getOrder()) {}
       FIELD_SET(*this, FIX::EventType);
       FIELD_SET(*this, FIX::EventDate);
       FIELD_SET(*this, FIX::EventPx);
@@ -121,7 +131,12 @@ namespace FIX44
     class NoInstrAttrib: public FIX::Group
     {
     public:
-    NoInstrAttrib() : FIX::Group(870,871,FIX::message_order(871,872,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {871,872};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoInstrAttrib () : FIX::Group(870,871,getOrder()) {}
       FIELD_SET(*this, FIX::InstrAttribType);
       FIELD_SET(*this, FIX::InstrAttribValue);
     };
@@ -157,7 +172,12 @@ namespace FIX44
     class NoPartyIDs: public FIX::Group
     {
     public:
-    NoPartyIDs() : FIX::Group(453,448,FIX::message_order(448,447,452,802,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {448,447,452,802};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoPartyIDs () : FIX::Group(453,448,getOrder()) {}
       FIELD_SET(*this, FIX::PartyID);
       FIELD_SET(*this, FIX::PartyIDSource);
       FIELD_SET(*this, FIX::PartyRole);
@@ -165,7 +185,12 @@ namespace FIX44
       class NoPartySubIDs: public FIX::Group
       {
       public:
-      NoPartySubIDs() : FIX::Group(802,523,FIX::message_order(523,803,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {523,803};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoPartySubIDs () : FIX::Group(802,523,getOrder()) {}
         FIELD_SET(*this, FIX::PartySubID);
         FIELD_SET(*this, FIX::PartySubIDType);
       };
@@ -197,7 +222,12 @@ namespace FIX44
     class NoStipulations: public FIX::Group
     {
     public:
-    NoStipulations() : FIX::Group(232,233,FIX::message_order(233,234,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {233,234};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoStipulations () : FIX::Group(232,233,getOrder()) {}
       FIELD_SET(*this, FIX::StipulationType);
       FIELD_SET(*this, FIX::StipulationValue);
     };
@@ -213,7 +243,12 @@ namespace FIX44
     class NoOrders: public FIX::Group
     {
     public:
-    NoOrders() : FIX::Group(73,11,FIX::message_order(11,37,198,526,66,756,38,799,800,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {11,37,198,526,66,756,38,799,800};
+        static FIX::message_order const order(data, 9);
+        return order;
+      };
+      NoOrders () : FIX::Group(73,11,getOrder()) {}
       FIELD_SET(*this, FIX::ClOrdID);
       FIELD_SET(*this, FIX::OrderID);
       FIELD_SET(*this, FIX::SecondaryOrderID);
@@ -223,7 +258,12 @@ namespace FIX44
       class NoNested2PartyIDs: public FIX::Group
       {
       public:
-      NoNested2PartyIDs() : FIX::Group(756,757,FIX::message_order(757,758,759,806,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {757,758,759,806};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoNested2PartyIDs () : FIX::Group(756,757,getOrder()) {}
         FIELD_SET(*this, FIX::Nested2PartyID);
         FIELD_SET(*this, FIX::Nested2PartyIDSource);
         FIELD_SET(*this, FIX::Nested2PartyRole);
@@ -231,7 +271,12 @@ namespace FIX44
         class NoNested2PartySubIDs: public FIX::Group
         {
         public:
-        NoNested2PartySubIDs() : FIX::Group(806,760,FIX::message_order(760,807,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {760,807};
+            static FIX::message_order const order(data, 2);
+            return order;
+          };
+          NoNested2PartySubIDs () : FIX::Group(806,760,getOrder()) {}
           FIELD_SET(*this, FIX::Nested2PartySubID);
           FIELD_SET(*this, FIX::Nested2PartySubIDType);
         };
@@ -244,7 +289,12 @@ namespace FIX44
     class NoExecs: public FIX::Group
     {
     public:
-    NoExecs() : FIX::Group(124,32,FIX::message_order(32,17,527,31,669,29,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {32,17,527,31,669,29};
+        static FIX::message_order const order(data, 6);
+        return order;
+      };
+      NoExecs () : FIX::Group(124,32,getOrder()) {}
       FIELD_SET(*this, FIX::LastQty);
       FIELD_SET(*this, FIX::ExecID);
       FIELD_SET(*this, FIX::SecondaryExecID);
@@ -256,7 +306,12 @@ namespace FIX44
     class NoUnderlyings: public FIX::Group
     {
     public:
-    NoUnderlyings() : FIX::Group(711,311,FIX::message_order(311,312,309,305,457,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {311,312,309,305,457,462,463,310,763,313,542,241,242,243,244,245,246,256,595,592,593,594,247,316,941,317,436,435,308,306,362,363,307,364,365,877,878,318,879,810,882,883,884,885,886};
+        static FIX::message_order const order(data, 45);
+        return order;
+      };
+      NoUnderlyings () : FIX::Group(711,311,getOrder()) {}
       FIELD_SET(*this, FIX::UnderlyingSymbol);
       FIELD_SET(*this, FIX::UnderlyingSymbolSfx);
       FIELD_SET(*this, FIX::UnderlyingSecurityID);
@@ -305,7 +360,12 @@ namespace FIX44
       class NoUnderlyingSecurityAltID: public FIX::Group
       {
       public:
-      NoUnderlyingSecurityAltID() : FIX::Group(457,458,FIX::message_order(458,459,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {458,459};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoUnderlyingSecurityAltID () : FIX::Group(457,458,getOrder()) {}
         FIELD_SET(*this, FIX::UnderlyingSecurityAltID);
         FIELD_SET(*this, FIX::UnderlyingSecurityAltIDSource);
       };
@@ -314,7 +374,12 @@ namespace FIX44
     class NoLegs: public FIX::Group
     {
     public:
-    NoLegs() : FIX::Group(555,600,FIX::message_order(600,601,602,603,604,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {600,601,602,603,604,607,608,609,764,610,611,248,249,250,251,252,253,257,599,596,597,598,254,612,942,613,614,615,616,617,618,619,620,621,622,623,624,556,740,739,955,956};
+        static FIX::message_order const order(data, 42);
+        return order;
+      };
+      NoLegs () : FIX::Group(555,600,getOrder()) {}
       FIELD_SET(*this, FIX::LegSymbol);
       FIELD_SET(*this, FIX::LegSymbolSfx);
       FIELD_SET(*this, FIX::LegSecurityID);
@@ -360,7 +425,12 @@ namespace FIX44
       class NoLegSecurityAltID: public FIX::Group
       {
       public:
-      NoLegSecurityAltID() : FIX::Group(604,605,FIX::message_order(605,606,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {605,606};
+          static FIX::message_order const order(data, 2);
+          return order;
+        };
+        NoLegSecurityAltID () : FIX::Group(604,605,getOrder()) {}
         FIELD_SET(*this, FIX::LegSecurityAltID);
         FIELD_SET(*this, FIX::LegSecurityAltIDSource);
       };
@@ -369,7 +439,12 @@ namespace FIX44
     class NoAllocs: public FIX::Group
     {
     public:
-    NoAllocs() : FIX::Group(78,79,FIX::message_order(79,661,573,366,80,467,81,539,208,209,161,360,361,12,13,479,497,153,154,119,737,120,736,155,156,742,741,136,576,635,780,172,169,170,171,85,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {79,661,573,366,80,467,81,539,208,209,161,360,361,12,13,479,497,153,154,119,737,120,736,155,156,742,741,136,576,635,780,172,169,170,171,85};
+        static FIX::message_order const order(data, 36);
+        return order;
+      };
+      NoAllocs () : FIX::Group(78,79,getOrder()) {}
       FIELD_SET(*this, FIX::AllocAccount);
       FIELD_SET(*this, FIX::AllocAcctIDSource);
       FIELD_SET(*this, FIX::MatchStatus);
@@ -381,7 +456,12 @@ namespace FIX44
       class NoNestedPartyIDs: public FIX::Group
       {
       public:
-      NoNestedPartyIDs() : FIX::Group(539,524,FIX::message_order(524,525,538,804,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {524,525,538,804};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoNestedPartyIDs () : FIX::Group(539,524,getOrder()) {}
         FIELD_SET(*this, FIX::NestedPartyID);
         FIELD_SET(*this, FIX::NestedPartyIDSource);
         FIELD_SET(*this, FIX::NestedPartyRole);
@@ -389,7 +469,12 @@ namespace FIX44
         class NoNestedPartySubIDs: public FIX::Group
         {
         public:
-        NoNestedPartySubIDs() : FIX::Group(804,545,FIX::message_order(545,805,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {545,805};
+            static FIX::message_order const order(data, 2);
+            return order;
+          };
+          NoNestedPartySubIDs () : FIX::Group(804,545,getOrder()) {}
           FIELD_SET(*this, FIX::NestedPartySubID);
           FIELD_SET(*this, FIX::NestedPartySubIDType);
         };
@@ -423,14 +508,24 @@ namespace FIX44
       class NoDlvyInst: public FIX::Group
       {
       public:
-      NoDlvyInst() : FIX::Group(85,165,FIX::message_order(165,787,781,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {165,787,781};
+          static FIX::message_order const order(data, 3);
+          return order;
+        };
+        NoDlvyInst () : FIX::Group(85,165,getOrder()) {}
         FIELD_SET(*this, FIX::SettlInstSource);
         FIELD_SET(*this, FIX::DlvyInstType);
         FIELD_SET(*this, FIX::NoSettlPartyIDs);
         class NoSettlPartyIDs: public FIX::Group
         {
         public:
-        NoSettlPartyIDs() : FIX::Group(781,782,FIX::message_order(782,783,784,801,0)) {}
+          static FIX::message_order const & getOrder() {
+            static int const data[] = {782,783,784,801};
+            static FIX::message_order const order(data, 4);
+            return order;
+          };
+          NoSettlPartyIDs () : FIX::Group(781,782,getOrder()) {}
           FIELD_SET(*this, FIX::SettlPartyID);
           FIELD_SET(*this, FIX::SettlPartyIDSource);
           FIELD_SET(*this, FIX::SettlPartyRole);
@@ -438,7 +533,12 @@ namespace FIX44
           class NoSettlPartySubIDs: public FIX::Group
           {
           public:
-          NoSettlPartySubIDs() : FIX::Group(801,785,FIX::message_order(785,786,0)) {}
+            static FIX::message_order const & getOrder() {
+              static int const data[] = {785,786};
+              static FIX::message_order const order(data, 2);
+              return order;
+            };
+            NoSettlPartySubIDs () : FIX::Group(801,785,getOrder()) {}
             FIELD_SET(*this, FIX::SettlPartySubID);
             FIELD_SET(*this, FIX::SettlPartySubIDType);
           };
@@ -448,7 +548,12 @@ namespace FIX44
       class NoMiscFees: public FIX::Group
       {
       public:
-      NoMiscFees() : FIX::Group(136,137,FIX::message_order(137,138,139,891,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {137,138,139,891};
+          static FIX::message_order const order(data, 4);
+          return order;
+        };
+        NoMiscFees () : FIX::Group(136,137,getOrder()) {}
         FIELD_SET(*this, FIX::MiscFeeAmt);
         FIELD_SET(*this, FIX::MiscFeeCurr);
         FIELD_SET(*this, FIX::MiscFeeType);
@@ -458,7 +563,12 @@ namespace FIX44
       class NoClearingInstructions: public FIX::Group
       {
       public:
-      NoClearingInstructions() : FIX::Group(576,577,FIX::message_order(577,0)) {}
+        static FIX::message_order const & getOrder() {
+          static int const data[] = {577};
+          static FIX::message_order const order(data, 1);
+          return order;
+        };
+        NoClearingInstructions () : FIX::Group(576,577,getOrder()) {}
         FIELD_SET(*this, FIX::ClearingInstruction);
       };
     };

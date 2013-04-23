@@ -41,7 +41,12 @@ namespace FIXT11
     class NoMsgTypes: public FIX::Group
     {
     public:
-    NoMsgTypes() : FIX::Group(384,372,FIX::message_order(372,385,1130,1131,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {372,385,1130,1131};
+        static FIX::message_order const order(data, 4);
+        return order;
+      };
+      NoMsgTypes () : FIX::Group(384,372,getOrder()) {}
       FIELD_SET(*this, FIX::RefMsgType);
       FIELD_SET(*this, FIX::MsgDirection);
       FIELD_SET(*this, FIX::RefApplVerID);

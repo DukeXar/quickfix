@@ -70,14 +70,24 @@ namespace FIX42
     class NoIOIQualifiers: public FIX::Group
     {
     public:
-    NoIOIQualifiers() : FIX::Group(199,104,FIX::message_order(104,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {104};
+        static FIX::message_order const order(data, 1);
+        return order;
+      };
+      NoIOIQualifiers () : FIX::Group(199,104,getOrder()) {}
       FIELD_SET(*this, FIX::IOIQualifier);
     };
     FIELD_SET(*this, FIX::NoRoutingIDs);
     class NoRoutingIDs: public FIX::Group
     {
     public:
-    NoRoutingIDs() : FIX::Group(215,216,FIX::message_order(216,217,0)) {}
+      static FIX::message_order const & getOrder() {
+        static int const data[] = {216,217};
+        static FIX::message_order const order(data, 2);
+        return order;
+      };
+      NoRoutingIDs () : FIX::Group(215,216,getOrder()) {}
       FIELD_SET(*this, FIX::RoutingType);
       FIELD_SET(*this, FIX::RoutingID);
     };
