@@ -1,4 +1,4 @@
-require 'Runner'
+require_relative 'Runner'
 require 'runit/testcase'
 
 class RunnerTestCase < RUNIT::TestCase

@@ -38,6 +38,8 @@
 
 namespace FIX
 {
+class Group;
+
 /**
  * Stores and organizes a collection of Fields.
  *
@@ -47,15 +49,16 @@ namespace FIX
 class FieldMap
 {
 public:
+  typedef std::vector< FieldMap* > FieldMaps;
+
 #if defined(_MSC_VER) && _MSC_VER < 1300
   typedef std::map < int, FieldBase, message_order > Fields;
-  typedef std::map < int, std::vector < FieldMap* >, std::less<int> > Groups;
+  typedef std::map < int, FieldMaps, std::less<int> > Groups;
 #else
-  //typedef boost::shared_ptr<FieldBase> FieldBasePtr;
-  typedef std::map < int, FieldBase, message_order, 
+  typedef std::multimap < int, FieldBase, message_order, 
                           ALLOCATOR<std::pair<const int, FieldBase> > > Fields;
-  typedef std::map < int, std::vector < FieldMap* >, std::less<int>, 
-                     ALLOCATOR<std::pair<const int, std::vector< FieldMap* > > > > Groups;
+  typedef std::map < int, FieldMaps, std::less<int>, 
+                     ALLOCATOR<std::pair<const int, FieldMaps> > > Groups;
 #endif
 
   typedef Fields::const_iterator iterator;
@@ -67,24 +70,35 @@ public:
             message_order( message_order::normal ) )
   : m_fields( order ) {}
 
-  FieldMap( const FieldMap& copy )
-  { *this = copy; }
+  FieldMap( const FieldMap& rhs );
 
-  virtual ~FieldMap();
+  virtual ~FieldMap() { releaseGroups(); }
 
-  FieldMap& operator=( const FieldMap& rhs );
+  FieldMap& operator=( FieldMap rhs )
+  {
+     swap( rhs );
+     return *this;
+  }
+
+  void swap( FieldMap & rhs )
+  {
+     std::swap( m_fields, rhs.m_fields );
+     std::swap( m_groups, rhs.m_groups );
+  }
 
   /// Set a field without type checking
   void setField( const FieldBase& field, bool overwrite = true )
   throw( RepeatedTag )
   {
-    Fields::iterator hint = m_fields.lower_bound( field.getField() );
-    if (hint->first != field.getField()) {
-      m_fields.insert( hint, std::make_pair( field.getField(), field ) );
-    } else {
-      if (overwrite) {
-        hint->second = field;
-      }
+    Fields::iterator i = m_fields.find( field.getField() );
+    if( i == m_fields.end() )
+      m_fields.insert( Fields::value_type( field.getField(), field ) );
+    else
+    {
+      if( overwrite )
+        i->second = field;
+      else
+        m_fields.insert( Fields::value_type( field.getField(), field ) );
     }
   }
 
@@ -142,10 +156,10 @@ public:
   void removeField( int field );
 
   /// Add a group.
-  void addGroup( int field, const FieldMap& group, bool setCount = true );
+  void addGroup( int groupId, const FieldMap& group, bool setCount = true );
 
-  //. TODO
-  FieldMap & addGroup( int group, int field, int delim, const message_order & order, bool setCount = true );
+  /// Construct and add a group.
+  Group & addGroup( int groupId, int field, int delim, const message_order & order, bool setCount = true );
 
   /// Replace a specific instanct of a group.
   void replaceGroup( int num, int field, const FieldMap& group );
@@ -190,7 +204,7 @@ public:
   /// Clear all fields from the map
   void clear();
   /// Check if map contains any fields
-  bool isEmpty();
+  bool isEmpty() { return m_fields.empty(); }
 
   int totalFields() const;
 
@@ -206,6 +220,9 @@ public:
   iterator end() const { return m_fields.end(); }
   g_iterator g_begin() const { return m_groups.begin(); }
   g_iterator g_end() const { return m_groups.end(); }
+
+private:
+  void releaseGroups();
 
 private:
   Fields m_fields;
@@ -228,4 +245,4 @@ FIELD& get( FIELD& field ) const          \
 (const FIX::FLD&)MAP.getFieldRef( FIX::FIELD::FLD )
 
 #endif //FIX_FIELDMAP
-
+// vim: set sw=2 :

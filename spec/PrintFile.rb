@@ -31,7 +31,7 @@ class PrintFile
   end
 
   def printInline(*values)
-    @file.print values
+    @file.print values.join
   end
 
   def putsInline(*values)
@@ -44,7 +44,7 @@ class PrintFile
     end
 
     @file.print tabs
-    @file.print values
+    @file.print values.join
   end
 
   def puts(*values)

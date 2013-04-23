@@ -78,7 +78,6 @@ libquickfix_la_SOURCES = \
 	FieldMap.h \
 	Message.cpp \
 	Message.h \
-	Group.cpp \
 	Group.h \
 	MessageSorters.cpp \
 	MessageSorters.h \

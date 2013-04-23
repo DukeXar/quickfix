@@ -31,58 +31,52 @@
 
 namespace FIX
 {
-FieldMap::~FieldMap()
-{ QF_STACK_IGNORE_BEGIN
-  clear();
-  QF_STACK_IGNORE_END
-}
-
-FieldMap& FieldMap::operator=( const FieldMap& rhs )
-{ QF_STACK_PUSH(FieldMap::operator=)
-
-  m_fields = rhs.m_fields;
-
-  clear();
-
-  std::copy( rhs.m_fields.begin (), rhs.m_fields.end(),
-             std::inserter(m_fields, m_fields.begin()) );
-
-  Groups::const_iterator i;
-  for ( i = rhs.m_groups.begin(); i != rhs.m_groups.end(); ++i )
+FieldMap::FieldMap( const FieldMap& rhs )
+  : m_fields( rhs.m_fields.key_comp() )
+{
+  for ( Fields::const_iterator i = rhs.m_fields.begin(), end = rhs.m_fields.end(); i != end; ++i )
   {
-    std::vector < FieldMap* > ::const_iterator j;
-    for ( j = i->second.begin(); j != i->second.end(); ++j )
-      addGroup( i->first, **j );
+    m_fields.insert( std::make_pair( i->first, i->second.copy() ) );
   }
 
-  return *this;
-
-  QF_STACK_POP
+  for ( Groups::const_iterator i = rhs.m_groups.begin(), end = rhs.m_groups.end(); i != end; ++i )
+  {
+    for ( FieldMaps::const_iterator j = i->second.begin(), end = i->second.end(); j != end; ++j )
+    {
+      addGroup( i->first, **j );
+    }
+  }
 }
 
-void FieldMap::addGroup( int field, const FieldMap& group, bool setCount )
+void FieldMap::addGroup( int groupId, const FieldMap& group, bool setCount )
 { QF_STACK_PUSH(FieldMap::addGroup)
 
-  FieldMap * pGroup = new FieldMap( group.m_fields.key_comp() );
-  *pGroup = group;
-  m_groups[ field ].push_back( pGroup );
-  Groups::iterator i = m_groups.find( field );
+  FieldMap * pGroup = new FieldMap( group );
+
+  FieldMaps & maps = m_groups[ groupId ];
+  maps.push_back( pGroup );
+
   if( setCount )
-    setField( IntField( field, i->second.size() ) );
+  {
+    setField( IntField( groupId, maps.size() ) );
+  }
 
   QF_STACK_POP
 }
 
-FieldMap & FieldMap::addGroup( int group, int field, int delim, const message_order & order, bool setCount )
+Group & FieldMap::addGroup( int groupId, int field, int delim, const message_order & order, bool setCount )
 {
-   Group * pGroup = new Group( field, delim, order );
+  Group * pGroup = new Group( field, delim, order );
 
-   m_groups[ group ].push_back( pGroup );
-   Groups::iterator i = m_groups.find( group );
-   if( setCount )
-      setField( IntField( group, i->second.size() ) );
+  FieldMaps & maps = m_groups[ groupId ];
+  maps.push_back( pGroup );
 
-   return *pGroup;
+  if( setCount )
+  {
+    setField( IntField( groupId, maps.size() ) );
+  }
+
+  return *pGroup;
 }
 
 void FieldMap::replaceGroup( int num, int field, const FieldMap& group )
@@ -174,26 +168,25 @@ int FieldMap::groupCount( int field ) const
   QF_STACK_POP
 }
 
+void FieldMap::releaseGroups()
+{
+  for ( Groups::iterator it = m_groups.begin(), end = m_groups.end(); it != end; ++it )
+  {
+    for ( Groups::mapped_type::iterator ptrIt = it->second.begin(), ptrEnd = it->second.end(); ptrIt != ptrEnd; ++ptrIt )
+    {
+      delete *ptrIt;
+    }
+  }
+}
+
 void FieldMap::clear()
 { QF_STACK_PUSH(FieldMap::clear)
 
-  m_fields.clear();
+  releaseGroups();
 
-  Groups::iterator i;
-  for ( i = m_groups.begin(); i != m_groups.end(); ++i )
-  {
-    std::vector < FieldMap* > ::iterator j;
-    for ( j = i->second.begin(); j != i->second.end(); ++j )
-      delete *j;
-  }
+  m_fields.clear();
   m_groups.clear();
 
-  QF_STACK_POP
-}
-
-bool FieldMap::isEmpty()
-{ QF_STACK_PUSH(FieldMap::isEmpty)
-  return m_fields.size() == 0;
   QF_STACK_POP
 }
 
@@ -288,3 +281,4 @@ int FieldMap::calculateTotal( int checkSumField ) const
   QF_STACK_POP
 }
 }
+// vim: sw=2 :

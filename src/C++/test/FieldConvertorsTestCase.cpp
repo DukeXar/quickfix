@@ -163,7 +163,7 @@ TEST(utcTimeStampConvertFrom)
   CHECK_EQUAL( 26, result.getDate() );
 
   UtcTimeStamp result2 = UtcTimeStampConvertor::convert
-                         ( std::string( "20000426-12:05:06.555" ), true );
+                         ( std::string( "20000426-12:05:06.555" ) );
   CHECK_EQUAL( 12, result2.getHour() );
   CHECK_EQUAL( 5, result2.getMinute() );
   CHECK_EQUAL( 6, result2.getSecond() );

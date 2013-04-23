@@ -41,7 +41,7 @@ src/at
 src/pt
 src/ut
 
-src/test/store/
+test/store/
 
 examples/executor/C++/.libs/executor
 examples/executor/C++/executor

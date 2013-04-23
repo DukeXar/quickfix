@@ -34,6 +34,7 @@ message_order::message_order( int first, ... )
   va_start( arguments, first );
 
   Order order;
+  order.reserve(32);
   order.push_back(first);
 
   while ( true )
@@ -44,32 +45,28 @@ message_order::message_order( int first, ... )
     order.push_back( argument );
   }
 
-  setOrder( order );
+  setOrder( &order[0], order.size() );
 
   va_end( arguments );
 }
 
-message_order::message_order( const int order[] )
+message_order::message_order( int const * order, size_t size )
 : m_mode( group )
 {
-  int size = 0;
-  while( order[size] != 0 ) { ++size; }
-  setOrder( Order(order, order + size) );
+  setOrder( order, size );
 }
 
 message_order::message_order( Order const & order )
 : m_mode( group )
 {
-  setOrder( order );
+  setOrder( &order[0], order.size() );
 }
 
-void message_order::setOrder( Order const & order )
+void message_order::setOrder( int const * order, size_t size )
 {
-  size_t size = order.size();
-
   if (size < 1) return;
 
-  int largest = *(std::max_element(order.begin(), order.end()));
+  int largest = *(std::max_element(order, order + size));
 
   Order * target = new Order( largest + 1, 0 );
   m_groupOrder.reset( target );

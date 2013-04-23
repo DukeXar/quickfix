@@ -27,6 +27,8 @@
 #include <UnitTest++.h>
 #include "MessageSorters.h"
 
+#include <boost/assign/list_of.hpp>
+
 namespace FIX
 {
 
@@ -103,7 +105,7 @@ TEST(normalOrder)
 
 TEST(groupOrder)
 {
-  int order[6] = { 50, 12, 100, 11, 49, 0 };
+  message_order::Order order = boost::assign::list_of( 50 )( 12 )( 100 )( 11 )( 49 );
   message_order sorter( order );
 
   CHECK( !sorter(50, 50) );

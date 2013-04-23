@@ -121,9 +121,9 @@ public:
   enum cmp_mode { header, trailer, normal, group };
 
   explicit message_order( cmp_mode mode = normal ) : m_mode( mode ) {}
-  explicit message_order( int first, ... );
-  explicit message_order( const int order[] );
   explicit message_order( Order const & order );
+  explicit message_order( int first, ... );
+  message_order( int const * order, size_t size );
 
   bool operator() ( const int& x, const int& y ) const
   {
@@ -142,10 +142,9 @@ public:
 
 private:
   typedef boost::shared_ptr<Order> OrderPtr;
+  void setOrder( int const * order, size_t size );
 
 private:
-  void setOrder( Order const & order );
-
   cmp_mode m_mode;
   OrderPtr m_groupOrder;
 };

@@ -31,20 +31,29 @@
 
 namespace FIX
 {
+int const headerOrder[] =
+{
+  FIELD::BeginString,
+  FIELD::BodyLength,
+  FIELD::MsgType
+};
+
 std::auto_ptr<DataDictionary> Message::s_dataDictionary;
 
 Message::Message()
 : m_header( message_order( message_order::header ) ),
   m_trailer( message_order( message_order::trailer ) ),
+  m_field( 0 ),
   m_validStructure( true ) {}
 
 Message::Message( const std::string& string, bool validate )
 throw( InvalidMessage )
 : m_header( message_order( message_order::header ) ),
   m_trailer( message_order( message_order::trailer ) ),
+  m_field( 0 ),
   m_validStructure( true )
 {
-  setString( string, validate );
+  doSetString( string, validate, 0, 0 );
 }
 
 Message::Message( const std::string& string,
@@ -53,9 +62,10 @@ Message::Message( const std::string& string,
 throw( InvalidMessage )
 : m_header( message_order( message_order::header ) ),
   m_trailer( message_order( message_order::trailer ) ),
+  m_field( 0 ),
   m_validStructure( true )
 {
-  setString( string, validate, &dataDictionary, &dataDictionary );
+  doSetString( string, validate, &dataDictionary, &dataDictionary );
 }
 
 Message::Message( const std::string& string,
@@ -65,6 +75,7 @@ Message::Message( const std::string& string,
 throw( InvalidMessage )
 : m_header( message_order( message_order::header ) ),
   m_trailer( message_order( message_order::trailer ) ),
+  m_field( 0 ),
   m_validStructure( true )
 {
   setStringHeader( string );
@@ -105,7 +116,7 @@ void Message::reverseRoute( const Header& header )
   if( header.isSetField( beginString ) )
   {
     header.getField( beginString );
-    if( beginString.getValue().size() )
+    if( !beginString.isEmpty() )
       m_header.setField( beginString );
 
     OnBehalfOfLocationID onBehalfOfLocationID;
@@ -119,14 +130,14 @@ void Message::reverseRoute( const Header& header )
       if( header.isSetField( onBehalfOfLocationID ) )
       {
         header.getField( onBehalfOfLocationID );
-        if( onBehalfOfLocationID.getValue().size() )
+        if( !onBehalfOfLocationID.isEmpty() )
           m_header.setField( DeliverToLocationID( onBehalfOfLocationID ) );
       }
 
       if( header.isSetField( deliverToLocationID ) )
       {
         header.getField( deliverToLocationID );
-        if( deliverToLocationID.getValue().size() )
+        if( !deliverToLocationID.isEmpty() )
           m_header.setField( OnBehalfOfLocationID( deliverToLocationID ) );
       }
     }
@@ -135,14 +146,14 @@ void Message::reverseRoute( const Header& header )
   if( header.isSetField( senderCompID ) )
   {
     header.getField( senderCompID );
-    if( senderCompID.getValue().size() )
+    if( !senderCompID.isEmpty() )
       m_header.setField( TargetCompID( senderCompID ) );
   }
 
   if( header.isSetField( targetCompID ) )
   {
     header.getField( targetCompID );
-    if( targetCompID.getValue().size() )
+    if( !targetCompID.isEmpty() )
       m_header.setField( SenderCompID( targetCompID ) );
   }
 
@@ -160,28 +171,28 @@ void Message::reverseRoute( const Header& header )
   if( header.isSetField( onBehalfOfCompID ) )
   {
     header.getField( onBehalfOfCompID );
-    if( onBehalfOfCompID.getValue().size() )
+    if( !onBehalfOfCompID.isEmpty() )
       m_header.setField( DeliverToCompID( onBehalfOfCompID ) );
   }
 
   if( header.isSetField( onBehalfOfSubID ) )
   {
     header.getField( onBehalfOfSubID );
-    if( onBehalfOfSubID.getValue().size() )
+    if( !onBehalfOfSubID.isEmpty() )
       m_header.setField( DeliverToSubID( onBehalfOfSubID ) );
   }
 
   if( header.isSetField( deliverToCompID ) )
   {
     header.getField( deliverToCompID );
-    if( deliverToCompID.getValue().size() )
+    if( !deliverToCompID.isEmpty() )
       m_header.setField( OnBehalfOfCompID( deliverToCompID ) );
   }
 
   if( header.isSetField( deliverToSubID ) )
   {
     header.getField( deliverToSubID );
-    if( deliverToSubID.getValue().size() )
+    if( !deliverToSubID.isEmpty() )
       m_header.setField( OnBehalfOfSubID( deliverToSubID ) );
   }
 
@@ -297,26 +308,29 @@ void Message::setString( const std::string& string,
                          const DataDictionary* pSessionDataDictionary,
                          const DataDictionary* pApplicationDataDictionary )
 throw( InvalidMessage )
+{
+  clear();
+  doSetString( string, doValidation, pSessionDataDictionary, pApplicationDataDictionary );
+}
+
+void Message::doSetString( const std::string& string,
+                           bool doValidation,
+                           const DataDictionary* pSessionDataDictionary,
+                           const DataDictionary* pApplicationDataDictionary )
+throw( InvalidMessage )
 { QF_STACK_PUSH(Message::setString)
 
-  clear();
+  m_string = string;
 
   std::string::size_type pos = 0;
   int count = 0;
   std::string msgType;
 
-  static int const headerOrder[] =
-  {
-    FIELD::BeginString,
-    FIELD::BodyLength,
-    FIELD::MsgType
-  };
-
   field_type type = header;
 
-  m_string.reset( new std::string(string) );
+  std::string::size_type size = m_string.size();
 
-  while ( pos < string.size() )
+  while ( pos < size )
   {
     FieldBase field = extractField( pos, pSessionDataDictionary, pApplicationDataDictionary );
     if ( count < 3 && headerOrder[ count++ ] != field.getField() )
@@ -373,14 +387,14 @@ FieldBase Message::extractField
      const DataDictionary* pSessionDD, const DataDictionary* pAppDD,
      const Group* pGroup )
 {
-  std::string::size_type equalSign = m_string->find_first_of( '=', pos );
+  std::string::size_type equalSign = m_string.find_first_of( '=', pos );
   if( equalSign == std::string::npos )
     throw InvalidMessage("Equal sign not found in field");
 
   char* pEnd = 0;
-  int field = strtol( m_string->c_str() + pos, &pEnd, 0 );
+  int field = strtol( m_string.c_str() + pos, &pEnd, 0 );
 
-  std::string::size_type soh = m_string->find_first_of( '\001', equalSign + 1 );
+  std::string::size_type soh = m_string.find_first_of( '\001', equalSign + 1 );
   if ( soh == std::string::npos )
     throw InvalidMessage("SOH not found at end of field");
 
@@ -405,7 +419,7 @@ FieldBase Message::extractField
   }
 
   pos = soh + 1;
-  return FieldBase( field, m_string.get(), equalSign + 1, soh );
+  return FieldBase( field, &m_string, equalSign + 1, soh );
 }
 
 void Message::setGroup( const std::string& msgType, const FieldBase& field,
@@ -413,14 +427,14 @@ void Message::setGroup( const std::string& msgType, const FieldBase& field,
                         const DataDictionary& dataDictionary )
 {
 
-  int group = field.getField();
+  const int group = field.getField();
 
   int delim = 0;
   const DataDictionary* pDD = 0;
   if ( !dataDictionary.getGroup( msgType, group, delim, pDD ) )
     return;
 
-  std::string::size_type size = m_string->size();
+  std::string::size_type size = m_string.size();
   Group* pGroup = 0;
   while ( pos < size )
   {
@@ -429,7 +443,7 @@ void Message::setGroup( const std::string& msgType, const FieldBase& field,
 
     if ( (field.getField() == delim) || (pGroup == 0 && pDD->isField(field.getField())) )
     {
-      pGroup = static_cast<Group *>(&map.addGroup( group, field.getField(), delim, pDD->getMessageOrder(), false ));
+      pGroup = &(map.addGroup( group, field.getField(), delim, pDD->getMessageOrder(), false ));
     }
     else if ( !pDD->isField( field.getField() ) )
     {
@@ -456,9 +470,10 @@ bool Message::setStringHeader( const std::string& string )
   std::string::size_type pos = 0;
   int count = 0;
 
-  m_string.reset( new std::string(string) );
+  m_string = string;
+  std::string::size_type size = m_string.size();
 
-  while ( pos < m_string->size() )
+  while ( pos < size )
   {
     FieldBase field = extractField( pos );
     if ( count < 3 && headerOrder[ count++ ] != field.getField() )

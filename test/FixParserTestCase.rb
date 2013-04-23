@@ -1,7 +1,7 @@
-require 'FixParser'
+require_relative 'FixParser'
 require 'runit/testcase'
 require "thread"
-require 'SocketServer'
+require_relative 'SocketServer'
 
 class FixParserTestCase < RUNIT::TestCase
 

@@ -172,7 +172,7 @@ void DataDictionary::iterate( const FieldMap& map, const MsgType& msgType ) cons
       checkValue( field );
     }
 
-    if ( m_beginString.getValue().length() && shouldCheckTag(field) )
+    if ( !m_beginString.isEmpty() && shouldCheckTag(field) )
     {
       checkValidTagNumber( field );
       if ( !Message::isHeaderField( field, this )

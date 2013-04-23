@@ -1,4 +1,4 @@
-require 'PrintFile'
+require_relative 'PrintFile'
 
 class Aggregator
   def initialize

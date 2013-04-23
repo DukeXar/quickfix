@@ -397,12 +397,9 @@ struct UtcTimeStampConvertor
     return result;
   }
 
-  static UtcTimeStamp convert( const std::string& value,
-                               bool calculateDays = false )
+  static UtcTimeStamp convert( const std::string& value )
   throw( FieldConvertError )
   {
-    calculateDays = calculateDays;
-
     bool haveMilliseconds = false;
 
     switch( value.size() )

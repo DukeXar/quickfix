@@ -41,13 +41,6 @@ namespace FIX
 typedef FieldMap Header;
 typedef FieldMap Trailer;
 
-static int const headerOrder[] =
-  {
-    FIELD::BeginString,
-    FIELD::BodyLength,
-    FIELD::MsgType
-  };
-
 /**
  * Base class for all %FIX messages.
  *
@@ -60,8 +53,6 @@ class Message : public FieldMap
   friend class Session;
 
   enum field_type { header, body, trailer };
-
-  typedef boost::shared_ptr<std::string> SharedString;
 
 public:
   Message();
@@ -80,17 +71,7 @@ public:
            const FIX::DataDictionary& applicationDataDictionary, bool validate = true )
   throw( InvalidMessage );
 
-  Message( const Message& copy )
-  : FieldMap( copy ),
-    m_header( message_order( message_order::header ) ),
-    m_trailer( message_order( message_order::trailer ) )
-  {
-    m_header = copy.m_header;
-    m_trailer = copy.m_trailer;
-    m_validStructure = copy.m_validStructure;
-    m_field = copy.m_field;
-  }
-
+public:
   /// Set global data dictionary for encoding messages into XML
   static bool InitializeXML( const std::string& string );
 
@@ -231,7 +212,7 @@ public:
 
   void clear()
   { 
-    m_string.reset();
+    m_string.clear();
     m_field = 0;
     m_header.clear();
     FieldMap::clear();
@@ -306,6 +287,12 @@ public:
   void setSessionID( const SessionID& sessionID );
 
 private:
+  void doSetString( const std::string& string,
+                    bool validate,
+                    const FIX::DataDictionary* pSessionDataDictionary,
+                    const FIX::DataDictionary* pApplicationDataDictionary )
+  throw( InvalidMessage );
+
   void setGroup( const std::string& msgType, const FieldBase& field,
                  std::string::size_type& pos,
                  FieldMap& map, const DataDictionary& dataDictionary );
@@ -321,12 +308,11 @@ private:
 protected:
   mutable FieldMap m_header;
   mutable FieldMap m_trailer;
-  bool m_validStructure;
+  std::string m_string;
   int m_field;
-  static std::auto_ptr<DataDictionary> s_dataDictionary;
+  bool m_validStructure;
 
-private:
-  SharedString m_string;
+  static std::auto_ptr<DataDictionary> s_dataDictionary;
 };
 /*! @} */
 

@@ -33,8 +33,6 @@
 #include "FieldTypes.h"
 #include "Utility.h"
 
-#include <boost/shared_ptr.hpp>
-
 namespace FIX
 {
 /**
@@ -49,29 +47,47 @@ class FieldBase
   friend class Message;
 public:
   FieldBase( int field, const std::string& string )
-    : m_field( field ), m_string(string), m_sharedString( 0 ), m_length( 0 ), m_total( 0 ),
+    : m_string( string ), m_fullMessage( 0 ), m_field( field ), m_length( 0 ), m_total( 0 ),
       m_calculated( false )
   {}
 
-  FieldBase( int field, const std::string * sharedString, size_t from, size_t to )
-    : m_field( field ), m_sharedString( sharedString ), m_from( from ), m_to( to ),
+  /// A field, constructed this way will have a 'parent' - source message - that shares data string with field.
+  /// The field will know only about shared string address and a range of characters where this field is located.
+  /// The data will be copied only when it is really needed to end user (getString() is called).
+  FieldBase( int field, const std::string * fullMessage, size_t from, size_t to )
+    : m_fullMessage( fullMessage ), m_from( from ), m_to( to ), m_field( field ),
       m_length( 0 ), m_total( 0 ), m_calculated( false )
   { }
 
-  virtual ~FieldBase() {}
+  /// Makes a copy of the field, unbinding from parent (if any), so it will not depend on parent's lifetime
+  FieldBase copy() const
+  {
+    FieldBase result = *this;
+    // the copy should not share source string, as it may disappear
+    result.getString();
+    return result;
+  }
 
   void setField( int field )
   {
-    m_sharedString = 0;
     m_field = field;
     m_calculated = false;
   }
 
   void setString( const std::string& string )
   {
-    m_sharedString = 0;
+    m_fullMessage = 0;
     m_string = string;
     m_calculated = false;
+  }
+
+  bool isEmpty() const
+  {
+    if ( m_fullMessage )
+    {
+      return m_to == m_from;
+    }
+    return m_string.empty();
   }
 
   /// Get the fields integer tag.
@@ -81,12 +97,10 @@ public:
   /// Get the string representation of the fields value.
   const std::string& getString() const
   {
-    if ( m_sharedString )
+    if ( m_fullMessage )
     {
-      if ( m_string.empty() )
-      {
-        m_string = m_sharedString->substr( m_from, m_to - m_from );
-      }
+      m_string = m_fullMessage->substr( m_from, m_to - m_from );
+      m_fullMessage = 0;
     }
     return m_string;
   }
@@ -123,8 +137,11 @@ private:
 
     char buf[64];
 
-    if( m_sharedString )
+    if( m_fullMessage )
+    {
+      // unbind from source string
       getString();
+    }
 
     if( 13 + m_string.length() < sizeof(buf) )
     {
@@ -147,12 +164,13 @@ private:
     m_calculated = true;
   }
 
-  int m_field;
+private:
   mutable std::string m_string;
-  const std::string * m_sharedString;
+  mutable const std::string * m_fullMessage;
   size_t m_from;
   size_t m_to;
   mutable std::string m_data;
+  int m_field;
   mutable int m_length;
   mutable int m_total;
   mutable bool m_calculated;

@@ -1,4 +1,4 @@
-require 'PrintFile'
+require_relative 'PrintFile'
 
 class GeneratorCPP
   def initialize(type, major, minor, sp, basedir)
@@ -100,9 +100,16 @@ class GeneratorCPP
     @f.puts "class " + name + ": public FIX::Group"
     @f.puts "{"
     @f.puts "public:"
-    @f.print name + "() : FIX::Group(" + number + "," + delim + "," + "FIX::message_order("
-    order.each { |field| @f.printInline field + "," }
-    @f.putsInline "0)) {}"
+    @f.indent
+    @f.puts "static FIX::message_order const & getOrder() {"
+    @f.indent
+    @f.puts "static int const data[] = {#{order.join(',')}};"
+    @f.puts "static FIX::message_order const order(data, #{order.length});"
+    @f.puts "return order;"
+    @f.dedent
+    @f.puts "};"
+    @f.puts "#{name} () : FIX::Group(#{number},#{delim},getOrder()) {}"
+    @f.dedent
   end
 
   def groupEnd

@@ -16,8 +16,8 @@
 # not clear to you.
 #****************************************************************************
 
-require 'Reflector'
-require 'FixParser'
+require_relative 'Reflector'
+require_relative 'FixParser'
 require "socket"
 
 class ReflectorClient

@@ -270,16 +270,6 @@ public:
     return true;
   }
 
-  /// Returns group dictionary and delimiter fied if exists or zero pointer
-  std::pair<const DataDictionary*, int> getGroup( const std::string& msg, int field ) const
-  {
-     FieldToGroup::const_iterator i = m_groups.find( std::make_pair( msg, field ) );
-     if ( i == m_groups.end() )
-        return std::pair<const DataDictionary*, int>(0, 0);
-
-     return std::make_pair( i->second.second, i->second.first );
-  }
-
   bool isDataField( int field ) const
   {
     FieldTypes::const_iterator i = m_fieldTypes.find( field );
